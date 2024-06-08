@@ -161,7 +161,7 @@ def login_page():
             port=3306,
             database='app',
             mysql_user='root',
-            mysql_password='Subbu2003#'
+            mysql_password='password'
         )
         if success:
             st.session_state["logged_in"] = True
@@ -213,7 +213,7 @@ def main_app():
 
             # Store the results
             user_id = signup.get_user_id(st.session_state["email"], 'localhost', 3306, 'app', 'root', 'Subbu2003#')
-            signup.store_mcq_result(user_id, language, correct_count, len(questions), 'localhost', 3306, 'app', 'root', 'Subbu2003#')
+            signup.store_mcq_result(user_id, language, correct_count, len(questions), 'localhost', 3306, 'app', 'root', 'password')
 
     elif selected == "Coding":
         language = st.selectbox("Select a language", ["C", "C++", "Java", "Python"])
@@ -224,16 +224,16 @@ def main_app():
             solution = st.text_area("Write your solution here", key=problem)
             if st.button("Submit Solution", key=f"submit_{problem}"):
                 score = evaluate_code(problem, solution)
-                user_id = signup.get_user_id(st.session_state["email"], 'localhost', 3306, 'app', 'root', 'Subbu2003#')
-                signup.store_coding_result(user_id, language, problem, solution, score, 'localhost', 3306, 'app', 'root', 'Subbu2003#')
+                user_id = signup.get_user_id(st.session_state["email"], 'localhost', 3306, 'app', 'root', 'password')
+                signup.store_coding_result(user_id, language, problem, solution, score, 'localhost', 3306, 'app', 'root', 'password')
                 st.success(f"Your solution has been submitted for review. Score: {score}/10")
 
     elif selected == "Results":
         st.header("Your Results")
-        user_id = signup.get_user_id(st.session_state["email"], 'localhost', 3306, 'app', 'root', 'Subbu2003#')
+        user_id = signup.get_user_id(st.session_state["email"], 'localhost', 3306, 'app', 'root', 'password')
         
         st.subheader("MCQ Results")
-        mcq_results = signup.get_mcq_results(user_id, 'localhost', 3306, 'app', 'root', 'Subbu2003#')
+        mcq_results = signup.get_mcq_results(user_id, 'localhost', 3306, 'app', 'root', 'password')
         if mcq_results:
             mcq_df = pd.DataFrame(mcq_results, columns=["Language", "Correct Answers", "Total Questions", "Date"])
             st.dataframe(mcq_df)
@@ -241,7 +241,7 @@ def main_app():
             st.write("No MCQ results found.")
 
         st.subheader("Coding Results")
-        coding_results = signup.get_coding_results(user_id, 'localhost', 3306, 'app', 'root', 'Subbu2003#')
+        coding_results = signup.get_coding_results(user_id, 'localhost', 3306, 'app', 'root', 'password')
         if coding_results:
             coding_df = pd.DataFrame(coding_results, columns=["Language", "Problem", "Solution", "Score", "Date"])
             st.dataframe(coding_df)
