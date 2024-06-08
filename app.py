@@ -212,7 +212,7 @@ def main_app():
             st.pyplot(fig)
 
             # Store the results
-            user_id = signup.get_user_id(st.session_state["email"], 'localhost', 3306, 'app', 'root', 'Subbu2003#')
+            user_id = signup.get_user_id(st.session_state["email"], 'localhost', 3306, 'app', 'root', 'password')
             signup.store_mcq_result(user_id, language, correct_count, len(questions), 'localhost', 3306, 'app', 'root', 'password')
 
     elif selected == "Coding":
